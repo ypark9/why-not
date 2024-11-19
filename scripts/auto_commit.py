@@ -12,13 +12,12 @@ access_token = os.getenv('GITHUB_ACCESS_TOKEN') or os.getenv('ACCESS_TOKEN')
 if not access_token:
     raise ValueError("GitHub Access Token not found. Please set it in the GitHub Actions secrets or the .env file.")
 
-# Determine if we're running in GitHub Actions or locally
 if 'GITHUB_ACTIONS' in os.environ:
     # GitHub Actions environment
     local_dir = '/home/runner/work/auto-commit-and-chill/auto-commit-and-chill'  # Runner path
 else:
     # Local environment
-    local_dir = '/home/anil/Desktop/learning/learn-scripting/auto-commit-and-chill'  # local path
+    local_dir = '/home/anil/Desktop/learning/learn-scripting/auto-commit-and-chill'  # Local path
 
 repo_name = 'anilrajrimal1/auto-commit-and-chill'
 file_name = 'anil-magic.txt'
@@ -42,9 +41,15 @@ def create_or_update_file(file_path, content):
 def commit_and_push_changes(repo, file_path, commit_message, branch_name, token):
     try:
         repo.index.add([file_path])
+
         repo.index.commit(commit_message)
         logger.info(f"Committed changes: '{commit_message}'")
 
+        # Configure the Git credentials using the token
+        repo.git.config('user.name', 'anilrajrimal1')  # Set user name
+        repo.git.config('user.email', 'anilrajrimal@gmail.com')  # Set user email
+
+        # Ensure Git uses HTTPS with the token for authentication
         origin = repo.remotes.origin
         remote_url = origin.url.replace('https://', f'https://{token}@')
         origin.set_url(remote_url)
@@ -64,7 +69,6 @@ def main():
             return
 
         repo.git.checkout(branch_name)
-
         new_file_path = os.path.join(local_dir, file_name)
 
         if os.path.exists(new_file_path):
@@ -73,6 +77,7 @@ def main():
             logger.info(f"File '{file_name}' does not exist. It will be created.")
 
         create_or_update_file(new_file_path, file_content)
+
         commit_and_push_changes(repo, new_file_path, commit_message, branch_name, access_token)
 
         g = Github(access_token)
