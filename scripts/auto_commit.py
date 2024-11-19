@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-access_token = os.getenv('GITHUB_ACCESS_TOKEN')
+access_token = os.getenv('ACCESS_TOKEN')
 
 if not access_token:
     raise ValueError("GitHub Access Token not found. Please set it in the .env file.")
