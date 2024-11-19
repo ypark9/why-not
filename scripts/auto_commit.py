@@ -7,16 +7,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-access_token = os.getenv('GITHUB_ACCESS_TOKEN') or os.getenv('ACCESS_TOKEN')
+access_token = os.getenv('GITHUB_TOKEN')  # Token from GitHub Actions secret
 
 if not access_token:
-    raise ValueError("GitHub Access Token not found. Please set it in the GitHub Actions secrets or the .env file.")
+    raise ValueError("GitHub Access Token not found. Please set it in the GitHub Actions secrets.")
 
 if 'GITHUB_ACTIONS' in os.environ:
-    # GitHub Actions environment
     local_dir = '/home/runner/work/auto-commit-and-chill/auto-commit-and-chill'  # Runner path
 else:
-    # Local environment
     local_dir = '/home/anil/Desktop/learning/learn-scripting/auto-commit-and-chill'  # Local path
 
 repo_name = 'anilrajrimal1/auto-commit-and-chill'
@@ -40,20 +38,18 @@ def create_or_update_file(file_path, content):
 
 def commit_and_push_changes(repo, file_path, commit_message, branch_name, token):
     try:
+        # Stage the file for commit
         repo.index.add([file_path])
 
+        # Commit the changes
         repo.index.commit(commit_message)
         logger.info(f"Committed changes: '{commit_message}'")
 
         # Configure the Git credentials using the token
-        repo.git.config('user.name', 'anilrajrimal1')  # Set user name
-        repo.git.config('user.email', 'anilrajrimal@gmail.com')  # Set user email
+        repo.git.config('user.name', 'GitHub Actions')  # Set user name
+        repo.git.config('user.email', 'github-actions@github.com')  # Set user email
 
-        # Ensure Git uses HTTPS with the token for authentication
         origin = repo.remotes.origin
-        remote_url = origin.url.replace('https://', f'https://{token}@')
-        origin.set_url(remote_url)
-
         origin.push(refspec=f'{branch_name}:{branch_name}')
         logger.info(f"Changes pushed to branch '{branch_name}' successfully.")
     except Exception as e:
@@ -69,6 +65,7 @@ def main():
             return
 
         repo.git.checkout(branch_name)
+
         new_file_path = os.path.join(local_dir, file_name)
 
         if os.path.exists(new_file_path):
