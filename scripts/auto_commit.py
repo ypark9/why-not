@@ -13,11 +13,11 @@ if not access_token:
     raise ValueError("GitHub Access Token not found. Please set it in the GitHub Actions secrets or the .env file.")
 
 # Configuration
-repo_name = 'anilrajrimal1/auto-commit-and-chill'  # Repo
-local_dir = '/home/anil/Desktop/learning/learn-scripting/auto-commit-and-chill'  # Local path
-file_name = 'anil-magic.txt'  # File
+repo_name = 'anilrajrimal1/auto-commit-and-chill'  # Repo name
+local_dir = os.getcwd()
+file_name = 'anil-magic.txt'  # File to update/create
 commit_message = 'Update example file using Python script'  # Commit message
-branch_name = 'master'  # Branch name to push changes
+branch_name = 'master'  # Branch
 
 file_content = f"This file was created or updated on {datetime.now()}"
 
@@ -53,7 +53,6 @@ def commit_and_push_changes(repo, file_path, commit_message, branch_name):
         origin = repo.remotes.origin
         origin.push(refspec=f'{branch_name}:{branch_name}')
         logger.info(f"Changes pushed to branch '{branch_name}' successfully.")
-
     except Exception as e:
         logger.error(f"Error during commit or push: {e}")
         raise
@@ -64,21 +63,18 @@ def main():
         repo = git.Repo(local_dir)
 
         # Check if the branch exists locally
+        logger.info(f"Checking for branch: {branch_name}")
         if branch_name not in [branch.name for branch in repo.branches]:
             logger.error(f"Branch '{branch_name}' does not exist locally. Please create or checkout the branch.")
             return
 
         # Switch to the specified branch
         repo.git.checkout(branch_name)
+        logger.info(f"Switched to branch '{branch_name}'")
 
         # Define the full path of the file to create/update
         new_file_path = os.path.join(local_dir, file_name)
-
-        # Check if the file exists in the repository
-        if os.path.exists(new_file_path):
-            logger.info(f"File '{file_name}' already exists. It will be updated.")
-        else:
-            logger.info(f"File '{file_name}' does not exist. It will be created.")
+        logger.info(f"File path: {new_file_path}")
 
         # Create or update the file with new content
         create_or_update_file(new_file_path, file_content)
