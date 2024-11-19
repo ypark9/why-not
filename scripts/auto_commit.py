@@ -67,6 +67,10 @@ def main():
             logger.info(f"File '{file_name}' does not exist. It will be created.")
 
         create_or_update_file(new_file_path, file_content)
+
+        repo.git.config('user.name', 'anilrajrimal1')  # Name
+        repo.git.config('user.email', 'anilrajrimal@gmail.com')  # Email
+
         commit_and_push_changes(repo, new_file_path, commit_message, branch_name)
 
         g = Github(access_token)
