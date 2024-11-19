@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-access_token = os.getenv('ACCESS_TOKEN')
+access_token = os.getenv('GITHUB_ACCESS_TOKEN') or os.getenv('ACCESS_TOKEN')
 
 if not access_token:
-    raise ValueError("GitHub Access Token not found. Please set it in the .env file.")
+    raise ValueError("GitHub Access Token not found. Please set it in the GitHub Actions secrets or the .env file.")
 
 # Configuration
 repo_name = 'anilrajrimal1/auto-commit-and-chill'  # Repo
