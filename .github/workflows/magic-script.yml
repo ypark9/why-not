@@ -3,9 +3,9 @@ name: Auto Commit and Push
 on:
   push:
     branches:
-      - main
+      - master
   schedule:
-    - cron: '0 0 * * *'  # Run every day at midnight UTC
+    - cron: '0 10,13,19 * * *'  # Run at 10AM, 1PM, and 7PM
   workflow_dispatch:
 
 jobs:
