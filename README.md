@@ -6,7 +6,7 @@ Welcome to **Auto Commit and Chill**, the coolest way to automate your GitHub co
 This project automatically commits and pushes changes to your GitHub repository, so you can focus on the fun stuff and leave the repetitive tasks to the robots. 🤖💻
 
 ### Features:
-- Automatic commits 3 times a day at 10 AM, 1 PM, and 7 PM UTC (because, why not?) ⏰
+- Automatic commits every 2 hours (because, why not?) ⏰
 - Pushes changes directly to your repo. No more "manual" pushing. It's like magic, but real. ✨
 - Works seamlessly on GitHub Actions (and locally too, if you prefer to live dangerously). 🏠
 
@@ -24,10 +24,7 @@ This project automatically commits and pushes changes to your GitHub repository,
 3. Set up your SSH key for GitHub (IDK why HTTPS, couldn't authenticate).
 
 ### Schedule:
-- Runs automatically at:
-  - 10:00 AM UTC
-  - 1:00 PM UTC
-  - 7:00 PM UTC
+- Runs automatically after every 2 hours.
 
 (But feel free to manually trigger it via GitHub Action’s UI when you want it to do its thing. 🔥)
 
