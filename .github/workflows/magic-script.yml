@@ -2,7 +2,7 @@ name: Auto Commit and Push
 
 on:
   schedule:
-    - cron: '0 10,13,19 * * *'  # Run at 10AM, 1PM, and 7PM
+    - cron: '0 0 1/2 ? * *' # Every 2 hrs
   workflow_dispatch:
 
 jobs:
