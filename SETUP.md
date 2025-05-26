@@ -111,8 +111,27 @@ Your "Why Not" auto-commit project is ready to rock! 🚀
 
 ### Troubleshooting
 
-- **Permission denied**: Check your SSH key is added to GitHub
-- **Token errors**: Verify your `ACCESS_TOKEN` secret is set correctly
+- **Permission denied**: Check your GitHub token has the right permissions (`repo` and `workflow`)
+- **Token errors**: Verify your `ACCESS_TOKEN` secret is set correctly in repository settings
 - **Branch errors**: Make sure you're using `main` branch (not `master`)
+- **Authentication failed**: If pushing locally fails, you may need to use a Personal Access Token instead of password
+- **Remote already exists**: Run `git remote remove origin` then `git remote add origin https://github.com/ypark9/why-not.git`
+
+### Local Git Authentication
+
+If you're pushing locally and get authentication errors, you have two options:
+
+**Option 1: Use token in URL (easier)**
+
+```bash
+git remote set-url origin https://TOKEN@github.com/ypark9/why-not.git
+```
+
+**Option 2: Configure Git credentials**
+
+```bash
+git config credential.helper store
+# Then on first push, enter your GitHub username and use your token as password
+```
 
 Need help? The automation should work seamlessly once these steps are complete!

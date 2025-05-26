@@ -54,10 +54,10 @@ def main():
         repo = git.Repo(local_dir)
 
         if branch_name not in [branch.name for branch in repo.branches]:
-            logger.error(f"Branch '{branch_name}' does not exist locally. Please create or checkout the branch.")
-            return
-
-        repo.git.checkout(branch_name)
+            logger.info(f"Branch '{branch_name}' does not exist locally. Creating it...")
+            repo.git.checkout('-b', branch_name)
+        else:
+            repo.git.checkout(branch_name)
 
         new_file_path = os.path.join(local_dir, file_name)
 
