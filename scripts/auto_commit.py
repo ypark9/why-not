@@ -13,14 +13,14 @@ if not access_token:
     raise ValueError("GitHub Access Token not found. Please set it in the GitHub Actions secrets or the .env file.")
 
 if 'GITHUB_ACTIONS' in os.environ:
-    local_dir = '/home/runner/work/auto-commit-and-chill/auto-commit-and-chill'
+    local_dir = '/home/runner/work/why-not/why-not'
 else:
-    local_dir = '/home/anil/Desktop/learning/learn-scripting/auto-commit-and-chill'
+    local_dir = '/Users/yoonsoo.park/code/auto-commit-and-chill'
 
-repo_name = 'anilrajrimal1/auto-commit-and-chill'
-file_name = 'anil-magic.txt'
-commit_message = 'Update example file using Python script'
-branch_name = 'master'
+repo_name = 'ypark9/why-not'
+file_name = 'ypark9-magic.txt'
+commit_message = 'Auto-update: Why not commit? 🚀'
+branch_name = 'main'
 
 file_content = f"This file was created or updated on {datetime.now()}"
 
@@ -68,8 +68,8 @@ def main():
 
         create_or_update_file(new_file_path, file_content)
 
-        repo.git.config('user.name', 'anilrajrimal1')  # Name
-        repo.git.config('user.email', 'anilrajrimal@gmail.com')  # Email
+        repo.git.config('user.name', 'ypark9')  # Name
+        repo.git.config('user.email', 'yoonsoo@duck.com')  # Email
 
         commit_and_push_changes(repo, new_file_path, commit_message, branch_name)
 
